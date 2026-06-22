@@ -101,11 +101,27 @@ const form    = document.getElementById('enquiryForm');
 const overlay = document.getElementById('modalOverlay');
 
 const RULES = {
-  name:    { id: 'inp-name',    fld: 'fld-name',    msg: v => v.trim().length < 2    ? 'Please enter your full name'                        : '' },
-  phone:   { id: 'inp-phone',   fld: 'fld-phone',   msg: v => !/^(\+?91[\s-]?)?[6-9]\d{9}$/.test(v.trim().replace(/\s/g,'')) ? 'Enter a valid 10-digit Indian mobile number' : '' },
-  email:   { id: 'inp-email',   fld: 'fld-email',   msg: v => v.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? 'Enter a valid email address' : '' },
-  city:    { id: 'inp-city',    fld: 'fld-city',    msg: v => v.trim().length < 2    ? 'Please enter your city and state'                   : '' },
-  bagType: { id: 'inp-bagtype', fld: 'fld-bagtype', msg: v => v === ''               ? 'Please select a bag type'                           : '' },
+  name:    { id: 'inp-name',    fld: 'fld-name',
+             msg: v => {
+               if (v.trim().length < 2)          return 'Please enter your full name (min 2 characters)';
+               if (/\d/.test(v))                 return 'Name must not contain numbers';
+               if (!/^[A-Za-z\s.\-']+$/.test(v)) return 'Name should contain letters only';
+               return '';
+             }},
+  phone:   { id: 'inp-phone',   fld: 'fld-phone',
+             msg: v => {
+               const digits = v.trim().replace(/[\s\-()]/g, '');
+               const stripped = digits.replace(/^\+?91/, '');
+               if (!/^\d+$/.test(stripped))       return 'Enter digits only — no letters or symbols';
+               if (!/^[6-9]\d{9}$/.test(stripped)) return 'Enter a valid 10-digit Indian mobile number (starts with 6–9)';
+               return '';
+             }},
+  email:   { id: 'inp-email',   fld: 'fld-email',
+             msg: v => v.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? 'Enter a valid email address (e.g. name@company.com)' : '' },
+  city:    { id: 'inp-city',    fld: 'fld-city',
+             msg: v => v.trim().length < 2 ? 'Please enter your city and state' : '' },
+  bagType: { id: 'inp-bagtype', fld: 'fld-bagtype',
+             msg: v => v === '' ? 'Please select a bag type to continue' : '' },
 };
 
 function showError(rule, message) {
@@ -138,6 +154,29 @@ Object.values(RULES).forEach(rule => {
     const fldEl = document.getElementById(rule.fld);
     if (fldEl && fldEl.classList.contains('fld--error')) validateField(rule);
   });
+});
+
+/* ── INPUT GUARDS ── */
+/* Name: silently strip any digit as user types */
+const nameInput = document.getElementById('inp-name');
+nameInput && nameInput.addEventListener('input', () => {
+  const pos   = nameInput.selectionStart;
+  const clean = nameInput.value.replace(/[0-9]/g, '');
+  if (clean !== nameInput.value) {
+    nameInput.value = clean;
+    nameInput.setSelectionRange(pos - 1, pos - 1);
+  }
+});
+
+/* Phone: allow only digits, +, spaces, hyphens, brackets */
+const phoneInput = document.getElementById('inp-phone');
+phoneInput && phoneInput.addEventListener('input', () => {
+  const pos   = phoneInput.selectionStart;
+  const clean = phoneInput.value.replace(/[^\d+\s\-()]/g, '');
+  if (clean !== phoneInput.value) {
+    phoneInput.value = clean;
+    phoneInput.setSelectionRange(pos - 1, pos - 1);
+  }
 });
 
 const WEB3FORMS_KEY = 'fb3113a7-498d-41f2-bbbf-8931633a3d2f';

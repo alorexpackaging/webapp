@@ -906,12 +906,12 @@
             <div class="form-row-2">
               <div class="fld" id="fld-name">
                 <label for="inp-name">Full Name *</label>
-                <input type="text" id="inp-name" name="name" placeholder="Your Full Name" required autocomplete="name" />
+                <input type="text" id="inp-name" name="name" placeholder="e.g. Rajesh Kumar" required autocomplete="name" />
                 <span class="fld-error" id="err-name"></span>
               </div>
               <div class="fld" id="fld-phone">
                 <label for="inp-phone">Mobile Number *</label>
-                <input type="tel" id="inp-phone" name="phone" placeholder="+91 70555 98280" required autocomplete="tel" />
+                <input type="tel" id="inp-phone" name="phone" placeholder="+91 XXXXX XXXXX" required autocomplete="tel" inputmode="numeric" />
                 <span class="fld-error" id="err-phone"></span>
               </div>
             </div>
@@ -919,12 +919,12 @@
             <div class="form-row-2">
               <div class="fld" id="fld-email">
                 <label for="inp-email">Email Address</label>
-                <input type="email" id="inp-email" name="email" placeholder="XXXX@XXXX.com" autocomplete="email" />
+                <input type="email" id="inp-email" name="email" placeholder="name@company.com" autocomplete="email" />
                 <span class="fld-error" id="err-email"></span>
               </div>
               <div class="fld" id="fld-city">
                 <label for="inp-city">City &amp; State *</label>
-                <input type="text" id="inp-city" name="city" placeholder="XXXX, XXXX" required autocomplete="address-level2" />
+                <input type="text" id="inp-city" name="city" placeholder="e.g. Mumbai, Maharashtra" required autocomplete="address-level2" />
                 <span class="fld-error" id="err-city"></span>
               </div>
             </div>
@@ -949,7 +949,7 @@
             <div class="form-row-2">
               <div class="fld">
                 <label for="inp-qty">Approx. Quantity</label>
-                <input type="text" id="inp-qty" name="quantity" placeholder="e.g. 10,000 pieces" />
+                <input type="text" id="inp-qty" name="quantity" placeholder="e.g. 5,000 pcs" inputmode="numeric" />
               </div>
               <div class="fld">
                 <label for="inp-print">Custom Printing?</label>
