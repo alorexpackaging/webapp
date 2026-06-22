@@ -350,8 +350,9 @@ img { max-width: 100%; display: block; }
   font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.8);
   display: flex; align-items: center; gap: 6px; white-space: nowrap;
 }
-.hv-badge--eco { bottom: 20px; right: 20px; }
+.hv-badge--eco      { bottom: 20px; right: 20px; }
 .hv-badge--delivery { bottom: 70px; right: 40px; }
+.hv-badge--gst      { bottom: 125px; right: 10px; border-color: rgba(232,184,75,0.3); color: var(--gold-l); }
 
 .hero-scroll-hint {
   position: relative; z-index: 1; text-align: center; padding: 24px 0;
@@ -708,6 +709,30 @@ img { max-width: 100%; display: block; }
    TESTIMONIALS
 ══════════════════════════════════════ */
 .testimonials { padding: 112px 0; background: var(--light-bg); }
+
+.testi-rating-bar {
+  display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 50px; padding: 10px 24px;
+  margin-top: 20px; box-shadow: var(--shadow);
+}
+.trb-stars { font-size: 1rem; color: var(--gold); letter-spacing: 2px; line-height: 1; }
+.trb-score { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.trb-divider { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+.trb-count { font-size: 0.78rem; color: var(--text-light); font-weight: 500; }
+.trb-google { font-size: 0.78rem; color: var(--text-light); font-weight: 600; }
+
+.testi-verified {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.68rem; font-weight: 700; color: #1e8e3e;
+  background: rgba(30,142,62,0.08); border: 1px solid rgba(30,142,62,0.2);
+  border-radius: 50px; padding: 4px 10px;
+  margin-bottom: 12px; letter-spacing: 0.04em;
+}
+.testi-featured .testi-verified {
+  color: #4ade80; background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.25);
+}
+
 .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .testi-card {
   background: var(--white); border-radius: var(--radius-lg); padding: 36px;
@@ -739,6 +764,40 @@ img { max-width: 100%; display: block; }
 }
 .ta-info strong { font-size: 0.9rem; display: block; }
 .ta-info span { font-size: 0.76rem; color: var(--text-muted); }
+
+/* ══════════════════════════════════════
+   FAQ
+══════════════════════════════════════ */
+.faq-section { padding: 96px 0; background: var(--white); }
+.faq-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  max-width: 960px; margin: 0 auto;
+}
+.faq-item {
+  background: var(--off-white); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 28px;
+  transition: var(--transition);
+}
+.faq-item:hover {
+  background: var(--white); border-color: rgba(255,107,0,0.25);
+  box-shadow: var(--shadow); transform: translateY(-2px);
+}
+.faq-q {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.92rem; font-weight: 700; color: var(--text);
+  margin-bottom: 12px; line-height: 1.45;
+}
+.faq-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.faq-a {
+  font-size: 0.85rem; color: var(--text-light); line-height: 1.75;
+  padding-left: calc(1.1rem + 12px);
+}
+.faq-a strong { color: var(--saffron); font-weight: 700; }
+
+@media (max-width: 768px) {
+  .faq-grid { grid-template-columns: 1fr; }
+  .faq-section { padding: 72px 0; }
+}
 
 /* ══════════════════════════════════════
    CONTACT
@@ -1044,7 +1103,7 @@ img { max-width: 100%; display: block; }
   .ps-connector { width: 2px; height: 40px; margin-top: 0; transform: none; opacity: 0.4; }
   .ps-connector::after { right: auto; left: 50%; top: auto; bottom: -6px; transform: translateX(-50%) rotate(90deg); }
   .whyus-layout { grid-template-columns: 1fr; gap: 48px; }
-  .testi-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+  .testi-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-layout { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
 }
@@ -1068,6 +1127,9 @@ img { max-width: 100%; display: block; }
   .metric-sep { display: none; }
   .products-grid { grid-template-columns: 1fr; perspective: none; }
   .why-cards { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .testi-rating-bar { gap: 10px; padding: 8px 16px; }
+  .trb-divider { display: none; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom-inner { flex-direction: column; gap: 8px; text-align: center; }
   .form-row-2 { grid-template-columns: 1fr; gap: 0; }
