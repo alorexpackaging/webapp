@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════
-   SAWAARIYA SETH ENTERPRISES
+   ALOREX PACKAGING LLP
    Main JavaScript
 ══════════════════════════════════════ */
 
@@ -236,7 +236,7 @@ form && form.addEventListener('submit', async e => {
     const payload = new FormData();
     payload.append('access_key',         WEB3FORMS_KEY);
     payload.append('subject',            `New Enquiry: ${bagType} — ${name} (${city})`);
-    payload.append('from_name',          'SSE Website');
+    payload.append('from_name',          'Alorex Packaging LLP Website');
     payload.append('replyto',            email || 'sawaariyasethenterprises@gmail.com');
     payload.append('-- CUSTOMER DETAILS --', '───────────────────────────');
     payload.append('Full Name',          name);

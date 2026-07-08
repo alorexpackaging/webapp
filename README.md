@@ -1,8 +1,8 @@
-# Sawaariya Seth Enterprises — Official Website
+# Alorex Packaging LLP — Official Website
 
 > Premium Non-Woven Bag Manufacturer · Proudly Indian
 
-A fully responsive, production-ready static website for **Sawaariya Seth Enterprises**, a leading non-woven bag manufacturer based in India. Built with pure HTML, CSS, and JavaScript — no frameworks, no dependencies.
+A fully responsive, production-ready static website for **Alorex Packaging LLP**, a leading non-woven bag manufacturer based in India. Built with pure HTML, CSS, and JavaScript — no frameworks, no dependencies.
 
 ---
 
@@ -14,7 +14,7 @@ A fully responsive, production-ready static website for **Sawaariya Seth Enterpr
 
 ## About the Business
 
-Sawaariya Seth Enterprises manufactures high-quality non-woven bags for retailers, brands, distributors, and wholesalers across India. Products are available in bulk with custom logo printing options and are sourced 100% from Indian manufacturing.
+Alorex Packaging LLP manufactures high-quality non-woven bags for retailers, brands, distributors, and wholesalers across India. Products are available in bulk with custom logo printing options and are sourced 100% from Indian manufacturing.
 
 **Products offered:**
 - W-Cut Bags
@@ -92,7 +92,7 @@ Full client-side validation with live feedback:
 ## File Structure
 
 ```
-Sawaariya Seth Enterprises/
+Alorex Packaging LLP/
 ├── index.html      # Main website (all sections)
 ├── style.css       # All styles + design tokens + animations
 ├── script.js       # Interactions, validation, animations
@@ -158,4 +158,4 @@ Any `git push` to `main` automatically updates the live site within ~2 minutes.
 
 ## License
 
-All rights reserved. © Sawaariya Seth Enterprises. Unauthorised reproduction or redistribution is prohibited.
+All rights reserved. © Alorex Packaging LLP. Unauthorised reproduction or redistribution is prohibited.
