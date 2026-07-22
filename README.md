@@ -8,7 +8,7 @@ A fully responsive, production-ready static website for **Alorex Packaging LLP**
 
 ## Live Website
 
-[alorexpackaging.com](https://alorexpackaging,com)
+[alorexpackaging.com](https://alorexpackaging.com)
 
 ---
 
