@@ -349,45 +349,96 @@ window.addEventListener('scroll', () => {
   if (heroGrid) heroGrid.style.transform = `translateY(${sy * 0.2}px)`;
 }, { passive: true });
 
-/* ── STICKY CTA BAR (mobile only) ── */
-function createStickyBar() {
-  const existing = document.querySelector('.sticky-cta-bar');
-  if (window.innerWidth > 768) {
-    if (existing) existing.remove();
-    return;
-  }
-  if (existing) return;
-  const bar = document.createElement('div');
-  bar.className = 'sticky-cta-bar';
-  bar.innerHTML = `
-    <a href="tel:+919756565319" class="scb-call">📞 Call</a>
-    <a href="https://wa.me/919756565319" target="_blank" rel="noopener noreferrer" class="scb-wa">💬 WhatsApp</a>
-    <a href="#contact" class="scb-quote">Get Quote</a>
-  `;
-  document.body.appendChild(bar);
+/* ── CALLBACK POPUP ── */
+(function () {
+  if (sessionStorage.getItem('cb_shown')) return;
+  const overlay = document.getElementById('cbOverlay');
+  const form    = document.getElementById('cbForm');
+  if (!overlay) return;
 
-  const style = document.createElement('style');
-  style.textContent = `
-    .sticky-cta-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
-      display: flex; background: #fff;
-      border-top: 1px solid #e4ded6;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-    }
-    .sticky-cta-bar a {
-      flex: 1; text-align: center; padding: 14px 8px;
-      font-size: 0.82rem; font-weight: 700; color: #1a1a2e;
-      text-decoration: none; transition: background 0.2s;
-    }
-    .scb-call { border-right: 1px solid #e4ded6; }
-    .scb-wa { background: rgba(37,211,102,0.08); color: #1a7a3a; border-right: 1px solid #e4ded6; }
-    .scb-quote { background: #FF6B00; color: #fff; }
-    .wa-float { bottom: 80px; }
-  `;
-  document.head.appendChild(style);
-}
-createStickyBar();
-window.addEventListener('resize', createStickyBar, { passive: true });
+  const selectedBags = new Set();
+
+  setTimeout(() => {
+    overlay.classList.add('active');
+    sessionStorage.setItem('cb_shown', '1');
+  }, 6000);
+
+  document.getElementById('cbClose').addEventListener('click', () => overlay.classList.remove('active'));
+  document.getElementById('cbSkip').addEventListener('click',  () => overlay.classList.remove('active'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
+
+  document.querySelectorAll('.cb-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('selected');
+      if (chip.classList.contains('selected')) {
+        selectedBags.add(chip.dataset.value);
+      } else {
+        selectedBags.delete(chip.dataset.value);
+      }
+    });
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name  = document.getElementById('cb-name').value.trim();
+    const phone = document.getElementById('cb-phone').value.trim();
+    const city  = document.getElementById('cb-city').value.trim();
+    if (!name || !phone || !city) return;
+
+    try {
+      fetch('https://script.google.com/macros/s/AKfycbx_cn2xSVxf2qcCFGYtICuss7cF-c4pHOvc_7Q0-adBrdJDjcX3qymrcK-XqIBAP0Gg/exec', {
+        method: 'POST', mode: 'no-cors',
+        body: JSON.stringify({ name, phone, city, bagType: selectedBags.size ? [...selectedBags].join(', ') : 'Not selected', source: 'Popup' }),
+      });
+    } catch (_) { /* silent */ }
+
+    /* Show thank you state */
+    const modal = overlay.querySelector('.cb-modal');
+    modal.innerHTML = `
+      <div class="cb-thankyou">
+        <div class="cb-ty-confetti">
+          <span>🎊</span><span>✨</span><span>🎉</span>
+        </div>
+        <div class="cb-ty-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="cb-ty-title">Thank You, ${name}!</h3>
+        <p class="cb-ty-msg">Our team will reach you within <span class="cb-ty-highlight">2 hours</span> with pricing &amp; a free sample dispatch.</p>
+        <div class="cb-ty-steps">
+          <div class="cb-ty-step"><span>📞</span><p>Callback within 2 hrs</p></div>
+          <div class="cb-ty-step"><span>📦</span><p>Free sample dispatched</p></div>
+          <div class="cb-ty-step"><span>✅</span><p>No advance payment</p></div>
+        </div>
+        <button class="cb-ty-btn" onclick="document.getElementById('cbOverlay').classList.remove('active')">
+          Continue Exploring →
+        </button>
+      </div>`;
+  });
+})();
+
+/* ── CLEAR VALIDATION ON OUTSIDE CLICK ── */
+document.addEventListener('click', e => {
+  if (!form || form.contains(e.target)) return;
+  Object.values(RULES).forEach(rule => {
+    const fldEl = document.getElementById(rule.fld);
+    if (fldEl) fldEl.classList.remove('fld--error', 'fld--valid');
+    const errEl = fldEl && fldEl.querySelector('.fld-error');
+    if (errEl) errEl.textContent = '';
+  });
+});
+
+/* ── STICKY CTA BAR ── */
+const stickyCta = document.getElementById('stickyCta');
+const waFloat = document.querySelector('.wa-float');
+window.addEventListener('scroll', () => {
+  if (!stickyCta) return;
+  const show = window.scrollY > 500;
+  stickyCta.classList.toggle('visible', show);
+  if (waFloat) {
+    waFloat.style.opacity = show ? '0' : '1';
+    waFloat.style.pointerEvents = show ? 'none' : 'auto';
+  }
+}, { passive: true });
 
 /* ── GSAP-LIKE STAGGERED CARDS ── */
 document.querySelectorAll('.products-grid .prod-card').forEach((card, i) => {
